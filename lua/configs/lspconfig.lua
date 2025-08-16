@@ -42,3 +42,46 @@ lspconfig.pyright.setup {
     },
   },
 }
+
+lspconfig.ts_ls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+  init_options = {
+    preferences = {
+      includeInlayParameterNameHints = "all",
+      includeCompletionsForModuleExports = true,
+    },
+  },
+}
+
+-- Tailwind CSS
+lspconfig.tailwindcss.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
+  init_options = {
+    userLanguages = {
+      typescriptreact = "javascriptreact",
+    },
+  },
+  settings = {
+    tailwindCSS = {
+      experimental = {
+        classRegex = {
+          "tw`([^`]*)", -- tw`...`
+          'tw="([^"]*)', -- <div tw="..." />
+          'tw={"([^"}]*)', -- <div tw={"..."} />
+          "tw\\.\\w+`([^`]*)", -- tw.xxx`...`
+        },
+      },
+    },
+  },
+}
+
+-- ESLint (optional)
+lspconfig.eslint.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+}

@@ -61,6 +61,45 @@ return {
       { "<leader>sv", "<cmd>lua require('swenv').pick_venv()<cr>", desc = "Switch Venv" },
     },
   },
+
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    ft = { "typescript", "typescriptreact" },
+    opts = {
+      on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+      end,
+      settings = {
+        tsserver_file_preferences = {
+          includeInlayEnumMemberValueHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayFunctionParameterTypeHints = true,
+        },
+      },
+    },
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = { "javascriptreact", "typescriptreact" },
+    config = true,
+  },
+ 
+  {
+  "nvim-treesitter/nvim-treesitter",
+  opts = {
+    ensure_installed = {
+      "vim", "lua", "vimdoc",
+      "html", "css", "javascript", 
+      "typescript", "tsx"  -- Changed "jsx" to "tsx"
+    },
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
+    indent = { enable = true },
+  }
+}
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 
