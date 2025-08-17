@@ -106,6 +106,34 @@ return {
       indent = { enable = true },
     },
   },
+
+  {
+    "abecodes/tabout.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "hrsh7th/nvim-cmp",
+    },
+    event = "InsertEnter",
+    after = "nvim-cmp",
+    config = function()
+      require("tabout").setup {
+        tabkey = "<Tab>", -- Re-enable tabkey in tabout
+        backwards_tabkey = "<S-Tab>", -- Re-enable backwards tabkey
+        completion = false, -- Disable completion handling in tabout
+        tabouts = {
+          { open = "'", close = "'" },
+          { open = '"', close = '"' },
+          { open = "`", close = "`" },
+          { open = "(", close = ")" },
+          { open = "[", close = "]" },
+          { open = "{", close = "}" },
+          { open = "<", close = ">" }, -- For JSX/HTML
+        },
+        ignore_beginning = false,
+        act_as_tab = true,
+      }
+    end,
+  },
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 

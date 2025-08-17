@@ -38,3 +38,26 @@ map("n", "<leader>pc", function()
     require("utils.venv").setup_venv()
   end
 end, { desc = "Create Python venv" })
+
+map("i", "<ESC>", function()
+  local cmp = require "cmp"
+
+  -- First try to close documentation window if visible
+  pcall(function()
+    if cmp.visible_docs() then
+      cmp.close_docs()
+      return ""
+    end
+  end)
+
+  -- Then try to close completion menu
+  pcall(function()
+    if cmp.visible() then
+      cmp.close()
+      return ""
+    end
+  end)
+
+  -- Fallback to normal escape
+  return "<ESC>"
+end, { expr = true, desc = "Smart escape" })
