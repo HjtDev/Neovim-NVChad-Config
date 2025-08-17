@@ -84,22 +84,28 @@ return {
     ft = { "javascriptreact", "typescriptreact" },
     config = true,
   },
- 
+
   {
-  "nvim-treesitter/nvim-treesitter",
-  opts = {
-    ensure_installed = {
-      "vim", "lua", "vimdoc",
-      "html", "css", "javascript", 
-      "typescript", "tsx"  -- Changed "jsx" to "tsx"
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "vim",
+        "lua",
+        "vimdoc",
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "tsx",
+        "python", -- Changed "jsx" to "tsx"
+      },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+      indent = { enable = true },
     },
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
-    indent = { enable = true },
-  }
-}
+  },
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 
