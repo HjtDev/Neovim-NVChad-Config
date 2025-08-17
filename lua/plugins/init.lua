@@ -170,6 +170,32 @@ return {
       }
     end,
   },
+
+  {
+    "Pocco81/auto-save.nvim",
+    event = "BufEnter",
+    config = function()
+      require("auto-save").setup {
+        enabled = true,
+        trigger_events = {
+          immediate_save = { "InsertLeave", "FocusLost" },
+          defer_save = { "TextChanged", "TextChangedI" },
+        },
+        debounce_delay = 1000,
+        execution_message = {
+          message = "󰄳 Auto-saved",
+          dim = 0.3,
+          cleaning_interval = 1250,
+        },
+        conditions = {
+          exists = true,
+          modifiable = true,
+          filetype_is_not = { "alpha", "dashboard", "NvimTree", "TelescopePrompt", "lua" },
+        },
+      }
+    end,
+  },
+
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 

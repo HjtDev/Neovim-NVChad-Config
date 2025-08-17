@@ -60,3 +60,5 @@ map("i", "<ESC>", function()
   -- Fallback to normal escape
   return "<ESC>"
 end, { expr = true, desc = "Smart escape" })
+
+map("n", "<leader>ws", "<cmd>wall<cr>", { desc = "Save all buffers" })
