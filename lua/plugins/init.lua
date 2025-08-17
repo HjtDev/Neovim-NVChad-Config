@@ -134,6 +134,42 @@ return {
       }
     end,
   },
+
+  {
+    "kylechui/nvim-surround",
+    version = "^3.0.0", -- Stable version
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {
+        keymaps = {
+          insert = false,
+          insert_line = false,
+          normal = "ys", -- Add surround (original)
+          normal_cur = "yss", -- Add surround to current line
+          normal_line = "yS", -- Add surround with newlines
+          normal_cur_line = "ySS", -- Add surround to current line with newlines
+          visual = "S", -- Visual mode: S
+          visual_line = "S", -- Visual line mode
+          delete = "ds", -- Delete surround
+          change = "cs", -- Change surround
+        },
+        aliases = {
+          ["q"] = { "`", "'", '"' }, -- Press csq" to change any quote to double quotes
+          ["b"] = { ")", "]", "}" }, -- Press csb) to change any bracket to parentheses
+        },
+        surrounds = {
+          HTML = {
+            ["t"] = { -- Use 't' for tags
+              add = function()
+                local tag = vim.fn.input "Tag: "
+                return { { "<" .. tag .. ">" }, { "</" .. tag .. ">" } }
+              end,
+            },
+          },
+        },
+      }
+    end,
+  },
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 
