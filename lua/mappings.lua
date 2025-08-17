@@ -42,19 +42,18 @@ end, { desc = "Create Python venv" })
 map("i", "<ESC>", function()
   local cmp = require "cmp"
 
-  -- First try to close documentation window if visible
+  -- Close documentation window if visible
   pcall(function()
     if cmp.visible_docs() then
       cmp.close_docs()
-      return ""
     end
   end)
 
-  -- Then try to close completion menu
+  -- Close completion menu if visible
   pcall(function()
     if cmp.visible() then
-      cmp.close()
-      return ""
+      cmp.close() -- Use close instead of abort
+      return "" -- Stay in insert mode
     end
   end)
 

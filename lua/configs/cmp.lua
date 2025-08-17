@@ -1,7 +1,26 @@
 local cmp = require "cmp"
 
 return {
+  completion = {
+    autocomplete = {
+      trigger_characters = { ".", ":", "(", "[", ",", "@", "*", "#", "|", "=", "-", "{", "/", "\\", "+", "?" },
+      min_length = 1,
+    },
+    completeopt = "menu,menuone,noselect",
+    keyword_length = 1,
+    get_trigger_characters = function()
+      return { ".", ":", "(", "[", ",", "@", "*", "#", "|", "=", "-", "{", "/", "\\", "+", "?" }
+    end,
+  },
   mapping = {
+    ["<C-space>"] = cmp.mapping.complete(), -- Keep this
+    ["<ESC>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.close() -- Use close() instead of abort()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -17,11 +36,8 @@ return {
         fallback() -- Defer to tabout
       end
     end, { "i", "s" }),
-
-    -- Keep your existing mappings
-    ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<C-Space>"] = cmp.mapping.complete(),
   },
+
   sources = cmp.config.sources {
     { name = "nvim_lsp" },
     { name = "luasnip" },
