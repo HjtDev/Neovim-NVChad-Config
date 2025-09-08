@@ -52,7 +52,7 @@ map("i", "<ESC>", function()
   -- Close completion menu if visible
   pcall(function()
     if cmp.visible() then
-      cmp.close() -- Use close instead of abort
+      cmp.abort()
       return "" -- Stay in insert mode
     end
   end)

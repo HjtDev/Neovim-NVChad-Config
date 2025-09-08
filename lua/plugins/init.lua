@@ -23,6 +23,37 @@ return {
     end,
   },
 
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
+    },
+    event = "VeryLazy",
+    config = function()
+      local luasnip = require "luasnip"
+      luasnip.config.set_config {
+        history = true,
+        updateevents = "TextChanged,TextChangedI",
+        enable_autosnippets = true,
+      }
+      require("luasnip.loaders.from_vscode").lazy_load {
+        paths = {
+          vim.fn.stdpath "data" .. "/lazy/friendly-snippets/",
+        },
+      }
+      luasnip.filetype_extend("python", { "django" })
+      luasnip.filetype_extend("htmldjango", { "html", "djangohtml" })
+      luasnip.log.set_loglevel "info"
+      vim.defer_fn(function()
+        local python_snippets = luasnip.get_snippets "python" or {}
+        local django_snippets = luasnip.get_snippets "django" or {}
+        print("Python snippets" .. #python_snippets)
+        print("Django snippets" .. #django_snippets)
+      end, 1000)
+    end,
+  },
+
   -- Python-specific plugins (optional but recommended)
   {
     "mfussenegger/nvim-dap-python",
@@ -172,29 +203,34 @@ return {
   },
 
   {
-    "Pocco81/auto-save.nvim",
-    event = "BufEnter",
-    config = function()
-      require("auto-save").setup {
-        enabled = true,
-        trigger_events = {
-          immediate_save = { "InsertLeave", "FocusLost" },
-          defer_save = { "TextChanged", "TextChangedI" },
-        },
-        debounce_delay = 1000,
-        execution_message = {
-          message = "󰄳 Auto-saved",
-          dim = 0.3,
-          cleaning_interval = 1250,
-        },
-        conditions = {
-          exists = true,
-          modifiable = true,
-          filetype_is_not = { "alpha", "dashboard", "NvimTree", "TelescopePrompt", "lua" },
-        },
-      }
-    end,
+    "nvim-mini/mini.nvim",
+    version = "*",
   },
+
+  -- {
+  --   "Pocco81/auto-save.nvim",
+  --   event = "BufEnter",
+  --   config = function()
+  --     require("auto-save").setup {
+  --       enabled = false,
+  --       trigger_events = {
+  --         immediate_save = { "InsertLeave", "FocusLost" },
+  --         defer_save = { "TextChanged", "TextChangedI" },
+  --       },
+  --       debounce_delay = 1000,
+  --       execution_message = {
+  --         message = "󰄳 Auto-saved",
+  --         dim = 0.3,
+  --         cleaning_interval = 1250,
+  --       },
+  --       conditions = {
+  --         exists = true,
+  --         modifiable = true,
+  --         filetype_is_not = { "alpha", "dashboard", "NvimTree", "TelescopePrompt", "lua" },
+  --       },
+  --     }
+  --   end,
+  -- },
 
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },

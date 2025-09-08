@@ -16,7 +16,7 @@ return {
     ["<C-space>"] = cmp.mapping.complete(), -- Keep this
     ["<ESC>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.close() -- Use close() instead of abort()
+        cmp.abort() -- Use close() instead of abort()
       else
         fallback()
       end
@@ -43,5 +43,11 @@ return {
     { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },
+  },
+
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
   },
 }
