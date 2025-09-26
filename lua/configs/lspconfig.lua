@@ -3,11 +3,9 @@ require("nvchad.configs.lspconfig").defaults()
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
-local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
 
 local function find_venv(path)
-  -- Look for common venv directories
   local patterns = { "venv", ".venv", "env", ".env", "virtualenv" }
   for _, pattern in ipairs(patterns) do
     local venv_path = util.path.join(path, pattern)
@@ -18,8 +16,8 @@ local function find_venv(path)
   return nil
 end
 
--- Configure pyright
-lspconfig.pyright.setup {
+-- Configure pyright using the new API
+vim.lsp.config("pyright", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "python" },
@@ -41,9 +39,9 @@ lspconfig.pyright.setup {
       },
     },
   },
-}
+})
 
-lspconfig.ts_ls.setup {
+vim.lsp.config("ts_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
@@ -53,10 +51,10 @@ lspconfig.ts_ls.setup {
       includeCompletionsForModuleExports = true,
     },
   },
-}
+})
 
 -- Tailwind CSS
-lspconfig.tailwindcss.setup {
+vim.lsp.config("tailwindcss", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
@@ -69,19 +67,25 @@ lspconfig.tailwindcss.setup {
     tailwindCSS = {
       experimental = {
         classRegex = {
-          "tw`([^`]*)", -- tw`...`
-          'tw="([^"]*)', -- <div tw="..." />
-          'tw={"([^"}]*)', -- <div tw={"..."} />
-          "tw\\.\\w+`([^`]*)", -- tw.xxx`...`
+          "tw`([^`]*)",
+          'tw="([^"]*)',
+          'tw={"([^"}]*)',
+          "tw\\.\\w+`([^`]*)",
         },
       },
     },
   },
-}
+})
 
--- ESLint (optional)
-lspconfig.eslint.setup {
+-- ESLint
+vim.lsp.config("eslint", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-}
+})
+
+-- Enable all configured LSP servers
+vim.lsp.enable "pyright"
+vim.lsp.enable "ts_ls"
+vim.lsp.enable "tailwindcss"
+vim.lsp.enable "eslint"
